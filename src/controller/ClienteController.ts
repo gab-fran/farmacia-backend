@@ -1,4 +1,5 @@
 import { Cliente } from "../model/Cliente.js";
+import type { ClienteDTO } from "../interface/ClienteDTO.js";
 import type { Request, Response } from "express";
 
 class ClienteController extends Cliente {
@@ -15,10 +16,11 @@ class ClienteController extends Cliente {
         }
     }
 
-    static async novo(req: Request, res: Response): Promise<Response> {
+    static async novo(req: Request<{}, unknown, ClienteDTO>, res: Response): Promise<Response> {
         try {
             const dadosRecebidosCliente = req.body;
-            const respostaModelo = await Cliente.cadastrarCliente(dadosRecebidosCliente);
+            const cliente = new Cliente(dadosRecebidosCliente.nome, dadosRecebidosCliente.cpf);
+            const respostaModelo = await Cliente.cadastrarCliente(cliente);
 
             if (respostaModelo) {
                 return res.status(201).json({ mensagem: "Cliente cadastrado com sucesso." });
