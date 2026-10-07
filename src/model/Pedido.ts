@@ -1,12 +1,7 @@
 import { DatabaseModel } from "./DatabaseModel.js";
+import type { ItemDTO } from "../interface/ItemPedidoDTO.js";
 
 const database = new DatabaseModel().pool;
-
-export type ItemDTO = {
-  idProduto: number;
-  qtdProduto: number;
-  precoUnit: number;
-};
 
 export class Pedido {
   private idVenda?: number;

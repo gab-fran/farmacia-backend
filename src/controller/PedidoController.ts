@@ -1,4 +1,6 @@
-import { Pedido, type ItemDTO } from "../model/Pedido.js";
+import { Pedido } from "../model/Pedido.js";
+import type { PedidoDTO } from "../interface/PedidoDTO.js";
+import type { ItemDTO } from "../interface/ItemPedidoDTO.js";
 import type { Request, Response } from "express";
 
 class PedidoController extends Pedido {
@@ -25,9 +27,9 @@ class PedidoController extends Pedido {
     }
   }
 
-  static async novo(req: Request, res: Response): Promise<any> {
+  static async novo(req: Request<{}, unknown, PedidoDTO>, res: Response): Promise<Response> {
     try {
-      const { idCliente, itens } = req.body as { idCliente: number; itens: ItemDTO[] };
+      const { idCliente, itens } = req.body;
       if (!idCliente || !Array.isArray(itens) || itens.length === 0) {
         return res.status(400).json({ mensagem: "idCliente e itens são obrigatórios." });
       }
@@ -42,10 +44,10 @@ class PedidoController extends Pedido {
     }
   }
 
-  static async novoItem(req: Request, res: Response): Promise<any> {
+  static async novoItem(req: Request<{ id: string }, unknown, ItemDTO>, res: Response): Promise<Response> {
     try {
       const idVenda = Number(req.params.id);
-      const { idProduto, qtdProduto, precoUnit } = req.body as ItemDTO;
+      const { idProduto, qtdProduto, precoUnit } = req.body;
       if (!idProduto || !qtdProduto || typeof precoUnit !== "number") {
         return res.status(400).json({ mensagem: "idProduto, qtdProduto e precoUnit são obrigatórios." });
       }
