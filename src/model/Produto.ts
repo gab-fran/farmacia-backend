@@ -5,7 +5,7 @@ const database = new DatabaseModel().pool;
 export class Produto {
     private idProduto?: number;
     private descricao: string;
-    private validade?: Date | null;
+    private validade?: Date | string | null;
     private preco: number;
     private qtdEstoque: number;
     private qtdMinEstoque: number;
@@ -15,7 +15,7 @@ export class Produto {
         _preco: number,
         _qtdEstoque: number,
         _qtdMinEstoque: number,
-        _validade?: Date | null
+        _validade?: Date | string | null
     ) {
         this.descricao = _descricao;
         this.preco = _preco;
@@ -27,7 +27,7 @@ export class Produto {
     // ========== GETTERS ==========
     public getIdProduto(): number | undefined { return this.idProduto; }
     public getDescricao(): string { return this.descricao; }
-    public getValidade(): Date | null | undefined { return this.validade; }
+    public getValidade(): Date | string | null | undefined { return this.validade; }
     public getPreco(): number { return this.preco; }
     public getQtdEstoque(): number { return this.qtdEstoque; }
     public getQtdMinEstoque(): number { return this.qtdMinEstoque; }
@@ -132,7 +132,7 @@ export class Produto {
         idProduto: number,
         campos: Partial<{
             descricao: string;
-            validade: Date | null;
+            validade: Date | string | null;
             preco: number;
             qtdEstoque: number;
             qtdMinEstoque: number;

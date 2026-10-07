@@ -1,4 +1,5 @@
 import { Produto } from "../model/Produto.js";
+import type { ProdutoDTO, AtualizarProdutoDTO } from "../interface/ProdutoDTO.js";
 import type { Request, Response } from "express";
 
 class ProdutoController extends Produto {
@@ -23,7 +24,7 @@ class ProdutoController extends Produto {
         }
     }
 
-    static async novo(req: Request, res: Response): Promise<Response> {
+    static async novo(req: Request<{}, unknown, ProdutoDTO>, res: Response): Promise<Response> {
         try {
             const dadosRecebidos = req.body;
             const produto = new Produto(
@@ -46,7 +47,7 @@ class ProdutoController extends Produto {
         }
     }
 
-    static async atualizar(req: Request, res: Response): Promise<Response> {
+    static async atualizar(req: Request<{ idProduto: string }, unknown, AtualizarProdutoDTO>, res: Response): Promise<Response> {
         try {
             const idProdutoParam = req.params.idProduto;
             const idProduto = Number(idProdutoParam);
